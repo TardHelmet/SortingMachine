@@ -1,15 +1,11 @@
 <script>
 	import { spring } from 'svelte/motion';
 
-	export let item = '';
-	export let index = 0;
-	export let onSwipe = () => {};
-	export let favoriteItem = null;
-	export let hatedItem = null;
+	let { item = '', index = 0, onSwipe = () => {}, favoriteItem = null, hatedItem = null } = $props();
 
-	let startX = 0;
-	let startY = 0;
-	let isDragging = false;
+	let startX = $state(0);
+	let startY = $state(0);
+	let isDragging = $state(false);
 
 	const position = spring(
 		{ x: 0, y: 0 },
@@ -19,8 +15,8 @@
 		}
 	);
 
-	let currentX = 0;
-	let currentY = 0;
+	let currentX = $state(0);
+	let currentY = $state(0);
 
 	function handleStart(e) {
 		isDragging = true;
@@ -56,9 +52,9 @@
 		currentY = 0;
 	}
 
-	$: swipeProgress = Math.min(Math.abs(currentX) / (window.innerWidth * 0.3), 1);
-	$: backgroundColor = getBackgroundColor(currentX, currentY, swipeProgress);
-	$: textColor = getTextColor(currentX, currentY);
+	let swipeProgress = $derived(Math.min(Math.abs(currentX) / (window.innerWidth * 0.3), 1));
+	let backgroundColor = $derived(getBackgroundColor(currentX, currentY, swipeProgress));
+	let textColor = $derived(getTextColor(currentX, currentY));
 
 	function getBackgroundColor(x, y, progress) {
 		if (Math.abs(x) > Math.abs(y)) {

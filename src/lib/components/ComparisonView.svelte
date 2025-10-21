@@ -1,8 +1,7 @@
 <script>
-	export let comparison = null;
-	export let quizData = null;
+	let { comparison = null, quizData = null } = $props();
 
-	let expanded = false;
+	let expanded = $state(false);
 </script>
 
 {#if comparison && quizData}

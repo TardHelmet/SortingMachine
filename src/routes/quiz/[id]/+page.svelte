@@ -25,15 +25,15 @@
 	import multiplayerGames from '$lib/data/multiplayer-games.json';
 	import foods from '$lib/data/foods.json';
 
-	let quizData = null;
-	let shuffledItems = [];
-	let alreadyCompleted = false;
-	let completedResult = null;
-	let stage = 'loading';
-	let quizImageUrl = null;
-	let friendData = null;
-	let comparisonResult = null;
-	let errorMessage = '';
+	let quizData = $state(null);
+	let shuffledItems = $state([]);
+	let alreadyCompleted = $state(false);
+	let completedResult = $state(null);
+	let stage = $state('loading');
+	let quizImageUrl = $state(null);
+	let friendData = $state(null);
+	let comparisonResult = $state(null);
+	let errorMessage = $state('');
 
 	const quizzesMap = {
 		'criterion-films': criterionFilms,
@@ -211,9 +211,11 @@
 		goto('/');
 	}
 
-	$: $currentItemIndex;
-	$: $currentFavorite;
-	$: $currentHated;
+	$effect(() => {
+		$currentItemIndex;
+		$currentFavorite;
+		$currentHated;
+	});
 </script>
 
 {#if stage === 'loading'}

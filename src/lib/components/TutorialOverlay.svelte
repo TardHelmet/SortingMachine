@@ -1,5 +1,5 @@
 <script>
-	export let onDismiss = () => {};
+	let { onDismiss = () => {} } = $props();
 </script>
 
 <div class="tutorial-overlay">
